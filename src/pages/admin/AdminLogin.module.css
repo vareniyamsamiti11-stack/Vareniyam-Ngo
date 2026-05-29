@@ -1,0 +1,102 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-earth) 0%, var(--color-earth-dark) 100%);
+  padding: 2rem;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-strong);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.logoMark {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: var(--fw-bold);
+  color: white;
+}
+
+.logoName {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  color: var(--color-earth);
+  font-size: var(--text-lg);
+  margin: 0;
+}
+.logoSub {
+  font-size: var(--text-xs);
+  color: var(--color-mid-gray);
+  margin: 0;
+}
+
+.title { font-size: var(--text-2xl); color: var(--color-earth); margin: 0 0 0.25rem; }
+.subtitle { color: var(--color-mid-gray); font-size: var(--text-sm); margin: 0 0 1.75rem; }
+
+.error {
+  background: rgba(192,57,43,0.1);
+  border: 1px solid rgba(192,57,43,0.3);
+  color: var(--color-error);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  margin-bottom: 1.25rem;
+}
+
+.form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.label { font-size: var(--text-sm); font-weight: var(--fw-semi); color: var(--color-earth); }
+
+.input {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--color-warm-gray);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  background: var(--color-cream);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.input:focus {
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 0 3px rgba(232,101,26,0.15);
+}
+
+.btn {
+  background: var(--color-saffron);
+  color: white;
+  font-weight: var(--fw-semi);
+  font-size: var(--text-base);
+  font-family: var(--font-body);
+  padding: 0.85rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  box-shadow: 0 4px 16px rgba(232,101,26,0.3);
+}
+.btn:hover:not(:disabled) { background: var(--color-saffron-dark); transform: translateY(-1px); }
+.btn:disabled { opacity: 0.7; cursor: not-allowed; }
