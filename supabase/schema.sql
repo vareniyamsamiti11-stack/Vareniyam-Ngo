@@ -136,6 +136,7 @@ CREATE POLICY "Anon submit contact"    ON contact_messages       FOR INSERT TO a
 CREATE POLICY "Anon submit volunteer"  ON volunteer_applications  FOR INSERT TO anon WITH CHECK (TRUE);
 CREATE POLICY "Anon submit csr"        ON csr_inquiries           FOR INSERT TO anon WITH CHECK (TRUE);
 CREATE POLICY "Anon create donation"   ON donations               FOR INSERT TO anon WITH CHECK (TRUE);
+CREATE POLICY "Anon update pending donation" ON donations         FOR UPDATE TO anon USING (status = 'pending') WITH CHECK (status = 'received');
 CREATE POLICY "Anon subscribe newsletter" ON newsletter_subscribers FOR INSERT TO anon WITH CHECK (TRUE);
 
 -- Admin full access (authenticated = admin)
