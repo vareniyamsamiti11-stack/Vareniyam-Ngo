@@ -49,6 +49,7 @@ export default function ProgramsPage() {
             {PROGRAMS.map((program) => (
               <motion.div
                 key={program.slug}
+                id={program.slug}
                 className={`${styles.card} ${active === program.slug ? styles.cardActive : ''}`}
                 variants={fadeUp}
                 onClick={() => setActive(active === program.slug ? null : program.slug)}

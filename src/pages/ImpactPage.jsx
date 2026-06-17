@@ -11,12 +11,15 @@ const fadeUp = {
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 
 const TIMELINE = [
-  { year: '2019', title: 'Foundation', desc: 'VSKS registered under Madhya Pradesh Society Act. Launched Pehchan school for special children in Indore.' },
-  { year: '2020', title: 'Community Expansion', desc: 'Navaankur program launched in Khudel sector under MP Jan Abhiyan Parishad partnership. First mental health awareness camps.' },
-  { year: '2021', title: 'Swachh Bharat Mission', desc: 'Partnered with Swachh Bharat Mission in Khategaon block, Dewas. 3,000+ households sensitized, 8 ODF villages achieved.' },
-  { year: '2022', title: 'Livelihood Programs', desc: 'Vocational training for 200+ women. Financial literacy program launched. 12A & 80G registrations obtained.' },
-  { year: '2023', title: 'Scale-Up', desc: 'Suicide prevention network expanded. 10,000+ people sensitized on mental health. CSR-1 registration secured.' },
-  { year: '2024', title: 'Recognition', desc: 'Listed on NGODARPAN (NITI Aayog Darpan). Plantation drives cross 150 trees. 9 active programs running concurrently.' },
+  { year: '2018', title: 'Registration', desc: 'VSKS formally registered under the Madhya Pradesh Society Act — laying the legal foundation for community-driven impact.' },
+  { year: '2019', title: 'Financial Awareness for Women', desc: 'Launched awareness sessions around banking, savings, and financial planning specially targeting elderly and rural women.' },
+  { year: '2020', title: 'Community Groundwork', desc: 'Strengthened grassroots outreach and community mobilization across Indore and surrounding areas.' },
+  { year: '2021', title: 'Apni Paatshala Program', desc: 'Launched the Apni Paatshala education initiative — bringing non-formal learning and literacy support to underserved communities.' },
+  { year: '2022', title: 'SBM Khategaon Partnership', desc: 'Partnered with the Swachh Bharat Mission in Khategaon block, Dewas district — sensitizing 3,000+ households and achieving ODF status in 8 villages.' },
+  { year: '2023', title: 'Scale-Up & Recognition', desc: 'Suicide prevention network expanded. 10,000+ people sensitized on mental health. CSR-1 and NGODARPAN registrations secured.' },
+  { year: '2024', title: 'Mental Health Awareness & Subsidized Support', desc: 'Expanded mental health awareness campaigns across schools and ICDS centres. Introduced subsidized counselling and crisis-referral services for marginalized families.' },
+  { year: '2025', title: 'Vachanshul — Continued', desc: 'Launched Vachanshul, a community reading and literacy initiative, fostering a culture of learning and knowledge-sharing. Program continues to grow.' },
+  { year: '2026', title: 'Navaankur — Continued', desc: 'Navaankur community development program expanded further under MP Jan Abhiyan Parishad, deepening rural outreach, livelihood support, and self-governance capacity building.' },
 ]
 
 export default function ImpactPage() {
@@ -101,7 +104,7 @@ export default function ImpactPage() {
         <div className="container">
           <motion.div className="text-center" style={{ marginBottom:'3rem' }} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once:true }}>
             <span className={styles.eyebrow}>Our Journey</span>
-            <h2>Five Years of Change</h2>
+            <h2>Our Journey Since 2018</h2>
           </motion.div>
           <div className={styles.timeline}>
             {TIMELINE.map((item, i) => (

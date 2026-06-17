@@ -100,15 +100,18 @@ export default function GetInvolvedPage() {
         })
         .select()
         .single()
-      if (error) throw error
+      
+      if (error) {
+        throw new Error(error.message || 'Database insert failed')
+      }
 
       setDonationId(donation.id)
       setDonorInfo({ ...data, amount })
       setStatus(null)
       setStage(STAGE_QR)
     } catch (err) {
-      console.error(err)
-      flash('error', 'Something went wrong. Please try again.')
+      console.error('Donation insert error:', err)
+      flash('error', err.message || 'Something went wrong. Please try again.')
     }
   }
 
@@ -117,13 +120,20 @@ export default function GetInvolvedPage() {
     setStatus('loading')
     try {
       if (donationId) {
-        await supabase.from('donations').update({ status: 'received' }).eq('id', donationId)
+        const { error } = await supabase
+          .from('donations')
+          .update({ status: 'received' })
+          .eq('id', donationId)
+        
+        if (error) {
+          throw new Error(error.message || 'Database update failed')
+        }
       }
       setStatus(null)
       setStage(STAGE_THANKS)
     } catch (err) {
-      console.error(err)
-      flash('error', 'Could not confirm. Please contact us directly.')
+      console.error('Payment confirmation error:', err)
+      flash('error', err.message || 'Could not confirm. Please contact us directly.')
     }
   }
 

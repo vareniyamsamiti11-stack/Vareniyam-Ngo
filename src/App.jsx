@@ -11,10 +11,12 @@ import styles from './App.module.css'
 const HomePage       = lazy(() => import('./pages/HomePage'))
 const AboutPage      = lazy(() => import('./pages/AboutPage'))
 const ProgramsPage   = lazy(() => import('./pages/ProgramsPage'))
+const ProgramDetailPage = lazy(() => import('./pages/ProgramDetailPage'))
 const ImpactPage     = lazy(() => import('./pages/ImpactPage'))
 const GetInvolvedPage = lazy(() => import('./pages/GetInvolvedPage'))
 const NewsPage       = lazy(() => import('./pages/NewsPage'))
 const ContactPage    = lazy(() => import('./pages/ContactPage'))
+const GalleryPage    = lazy(() => import('./pages/GalleryPage'))
 
 // Lazy-loaded admin pages
 const AdminLogin      = lazy(() => import('./pages/admin/AdminLogin'))
@@ -56,11 +58,14 @@ export default function App() {
                 <Routes>
                   <Route path="/"             element={<HomePage />} />
                   <Route path="/about"        element={<AboutPage />} />
-                  <Route path="/programs"     element={<ProgramsPage />} />
+                  <Route path="/programs"          element={<ProgramsPage />} />
+                  <Route path="/programs/:slug"     element={<ProgramDetailPage />} />
                   <Route path="/impact"       element={<ImpactPage />} />
                   <Route path="/get-involved" element={<GetInvolvedPage />} />
                   <Route path="/news"         element={<NewsPage />} />
                   <Route path="/contact"      element={<ContactPage />} />
+                  <Route path="/gallery/:category" element={<GalleryPage />} />
+                  <Route path="/gallery" element={<GalleryPage />} />
                 </Routes>
               </Suspense>
             </main>
