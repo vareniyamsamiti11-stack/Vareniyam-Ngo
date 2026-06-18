@@ -75,7 +75,7 @@ community empowerment.</motion.p>
         <div className="container">
           <motion.div className={styles.founderCard} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once:true }}>
             <div className={styles.founderAvatar}>
-              <span>{ORG.founder.charAt(0)}</span>
+              <img src="/Assets/Founder.jpeg" alt={ORG.founder} className={styles.founderImg} />
             </div>
             <div className={styles.founderInfo}>
               <span className={styles.cardEyebrow}>Leadership</span>

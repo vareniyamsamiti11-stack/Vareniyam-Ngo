@@ -8,7 +8,7 @@ const QUICK_LINKS = [
   { label: 'Our Programs', href: '/programs' },
   { label: 'Impact',       href: '/impact' },
   { label: 'Get Involved', href: '/get-involved' },
-  { label: 'News',         href: '/news' },
+  { label: 'Testimonials', href: '/testimonials' },
   { label: 'Contact',      href: '/contact' },
 ]
 
@@ -33,7 +33,7 @@ export default function Footer() {
         {/* Col 1: Brand */}
         <div className={styles.brand}>
           <div className={styles.logo}>
-            <div className={styles.logoMark}><span>V</span></div>
+            <div className={styles.logoMark}><img src="/Assets/logo.jpeg" alt="VSKS Logo" className={styles.logoImg} /></div>
             <div>
               <p className={styles.logoName}>{ORG.shortName}</p>
               <p className={styles.logoSub}>Samaj Kalyan Samiti</p>

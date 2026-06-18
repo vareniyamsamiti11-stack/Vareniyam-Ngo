@@ -12,7 +12,7 @@ export const NAV_LINKS = [
   { label: 'Gallery',     href: '/gallery',  hasDropdown: true, dropdownType: 'gallery' },
   { label: 'Impact',      href: '/impact' },
   { label: 'Get Involved',href: '/get-involved' },
-  { label: 'News',        href: '/news' },
+  { label: 'Testimonials', href: '/testimonials' },
   { label: 'Contact',     href: '/contact' },
 ]
 
@@ -168,7 +168,7 @@ export const ORG = {
   shortName:  'VSKS',
   tagline:    'Building Inclusive Communities, One Life at a Time',
   mission:    'To empower marginalized communities through education, mental health advocacy, environmental action, and inclusive development — creating a society where every individual can live with dignity.',
-  founded:    '2019',
+  founded:    '2018',
   address:    'X-16 Near Gol Garden, New Ranibag Limbodi, Khandwa Road, Indore – 452020, Madhya Pradesh',
   phone:      '+91 83194 28199',
   email:      'Vreniyam.samiti11@gmail.com',
@@ -353,13 +353,89 @@ export const TESTIMONIALS = [
   },
 ]
 
+// ── Full Testimonials (for dedicated Testimonials page) ─────
+export const TESTIMONIALS_FULL = [
+  {
+    id: 1,
+    name: 'Priya Sharma',
+    role: 'Parent of Pehchan Student',
+    program: 'Pehchan – Special Education',
+    category: 'student',
+    quote: 'My son has shown tremendous improvement since joining Pehchan. The dedicated teachers and therapy sessions have truly transformed his life. VSKS is a blessing for families like ours.',
+  },
+  {
+    id: 2,
+    name: 'Ramesh Patel',
+    role: 'Community Member, Khudel',
+    program: 'Navaankur – Community Dev',
+    category: 'community',
+    quote: 'The Navaankur program helped our village get clean water access and better roads. VSKS listens to us and works with us — not just for us.',
+  },
+  {
+    id: 3,
+    name: 'Sunita Malviya',
+    role: 'Vocational Training Graduate',
+    program: 'Vocational Training',
+    category: 'student',
+    quote: 'After the tailoring training, I started my own small business. I can now support my family. VSKS gave me confidence and skills to be independent.',
+  },
+  {
+    id: 4,
+    name: 'Dr. Anjali Verma',
+    role: 'School Principal, Indore',
+    program: 'Mental Health Awareness',
+    category: 'partner',
+    quote: 'The mental health awareness session conducted by VSKS was eye-opening for our teachers and students. They handled sensitive topics with great professionalism and empathy.',
+  },
+  {
+    id: 5,
+    name: 'Meena Rathore',
+    role: 'Volunteer, 2 years',
+    program: 'Swachh Bharat Campaign',
+    category: 'volunteer',
+    quote: 'Volunteering with VSKS has been one of the most fulfilling experiences of my life. Every weekend I spend with the team reminds me of why community service matters.',
+  },
+  {
+    id: 6,
+    name: 'Arun Tiwari',
+    role: 'Father, Khargone',
+    program: 'Suicide Prevention',
+    category: 'student',
+    quote: 'When my son was in crisis, VSKS counsellors were there within hours. Their care and follow-up over months helped him find his way back. I cannot thank them enough.',
+  },
+  {
+    id: 7,
+    name: 'Kavita Joshi',
+    role: 'CSR Head, Manufacturing Firm',
+    program: 'CSR Partnership',
+    category: 'partner',
+    quote: 'Our partnership with VSKS has been transparent and impactful. Their detailed impact reports and professional approach make them one of the best NGO partners we work with.',
+  },
+  {
+    id: 8,
+    name: 'Rakesh Yadav',
+    role: 'Local Farmer, Scheme No. 78',
+    program: 'Environmental Action',
+    category: 'community',
+    quote: 'After joining the tree plantation drive, I understand the value of environment. VSKS educated our whole village — even the children are now planting saplings at home.',
+  },
+  {
+    id: 9,
+    name: 'Pooja Dubey',
+    role: 'Volunteer, 1 year',
+    program: 'Financial Awareness',
+    category: 'volunteer',
+    quote: 'I joined as a volunteer to teach basic finance, but I ended up learning far more about resilience and community from the families VSKS serves. A truly humbling experience.',
+  },
+]
+
 // ── Partner Logos (text-based fallback) ──────────────────────
 export const PARTNERS = [
   'NITI Aayog (Darpan)',
   'MP Jan Abhiyan Parishad',
   'Swachh Bharat Mission',
   'ICDS Indore',
-  'District Hospital Dewas',
+  'Aditya Birla Foundation',
 ]
 
 // ── Social Links ─────────────────────────────────────────────

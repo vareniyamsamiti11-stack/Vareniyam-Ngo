@@ -1,0 +1,308 @@
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 7rem 0 4rem;
+  overflow: hidden;
+  background: var(--color-cream);
+}
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsl(30 80% 96%) 0%, hsl(180 30% 94%) 100%);
+  z-index: 0;
+}
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+.eyebrow {
+  display: inline-block;
+  background: var(--color-saffron);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1.1rem;
+}
+.heroContent h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: var(--fw-bold);
+  color: var(--color-dark);
+  margin: 0 0 1rem;
+}
+.heroContent p {
+  font-size: var(--text-lg);
+  color: var(--color-mid-gray);
+  max-width: 560px;
+  margin: 0;
+}
+
+/* ── Featured Quote ──────────────────────────────────────── */
+.featuredSection {
+  padding: 3rem 0;
+  background: var(--color-white);
+}
+.featuredCard {
+  max-width: 820px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, hsl(28 95% 50% / 0.06), hsl(180 40% 45% / 0.06));
+  border: 2px solid var(--color-saffron);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+}
+.featuredQuoteIcon {
+  color: var(--color-saffron);
+  opacity: 0.35;
+  margin-bottom: 1.2rem;
+}
+.featuredQuote {
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-style: italic;
+  font-weight: var(--fw-medium);
+  color: var(--color-dark);
+  line-height: 1.75;
+  margin: 0 0 2rem;
+}
+.featuredAuthor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+.avatarLg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-saffron);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.authorName {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--fw-semi);
+  color: var(--color-dark);
+}
+.authorRole {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-mid-gray);
+}
+.authorProgram {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 11px;
+  background: hsl(28 95% 50% / 0.12);
+  color: var(--color-saffron);
+  font-weight: var(--fw-semi);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+}
+
+/* ── Section Header ──────────────────────────────────────── */
+.sectionHeader {
+  margin-bottom: 2rem;
+}
+.eyebrowAlt {
+  display: inline-block;
+  color: var(--color-teal, #0d9488);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.sectionHeader h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  font-weight: var(--fw-bold);
+  color: var(--color-dark);
+  margin: 0 0 0.75rem;
+}
+.sectionHeader p {
+  color: var(--color-mid-gray);
+  font-size: var(--text-base);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── Category Tabs ───────────────────────────────────────── */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.tab {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--color-warm-gray);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-earth);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semi);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab:hover { border-color: var(--color-saffron); color: var(--color-saffron); }
+.tabActive {
+  background: var(--color-saffron);
+  border-color: var(--color-saffron);
+  color: #fff;
+}
+.tabActive:hover {
+  background: var(--color-saffron);
+  border-color: var(--color-saffron);
+  color: #fff;
+}
+
+/* ── Cards Grid ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.card {
+  background: var(--color-white);
+  border: 1.5px solid var(--color-warm-gray);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.card:hover {
+  box-shadow: 0 8px 32px hsl(28 60% 50% / 0.12);
+  transform: translateY(-3px);
+  border-color: var(--color-saffron);
+}
+.cardQuoteIcon {
+  color: var(--color-saffron);
+  opacity: 0.5;
+}
+.cardQuote {
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-dark);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-warm-gray);
+}
+.avatarSm {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-saffron), hsl(28 95% 65%));
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cardAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.cardAuthor strong {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semi);
+  color: var(--color-dark);
+}
+.cardAuthor span {
+  font-size: var(--text-xs);
+  color: var(--color-mid-gray);
+}
+.cardProgram {
+  font-size: 11px !important;
+  background: hsl(28 95% 50% / 0.1);
+  color: var(--color-saffron) !important;
+  font-weight: var(--fw-semi);
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 0.15rem;
+}
+
+/* ── CTA Section ─────────────────────────────────────────── */
+.ctaSection {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, hsl(28 85% 48%), hsl(28 75% 38%));
+}
+.ctaBox {
+  text-align: center;
+  color: #fff;
+}
+.ctaBox h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  font-weight: var(--fw-bold);
+  margin: 0 0 0.75rem;
+}
+.ctaBox p {
+  font-size: var(--text-lg);
+  opacity: 0.9;
+  max-width: 540px;
+  margin: 0 auto 2rem;
+}
+.ctaBtns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  color: var(--color-saffron);
+  font-weight: var(--fw-semi);
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btnPrimary:hover { opacity: 0.9; }
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #fff;
+  font-weight: var(--fw-semi);
+  padding: 0.8rem 1.8rem;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btnOutline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .featuredCard { padding: 1.75rem 1.25rem; }
+  .grid { grid-template-columns: 1fr; }
+  .tabs { gap: 0.35rem; }
+}

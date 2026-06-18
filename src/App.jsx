@@ -14,7 +14,7 @@ const ProgramsPage   = lazy(() => import('./pages/ProgramsPage'))
 const ProgramDetailPage = lazy(() => import('./pages/ProgramDetailPage'))
 const ImpactPage     = lazy(() => import('./pages/ImpactPage'))
 const GetInvolvedPage = lazy(() => import('./pages/GetInvolvedPage'))
-const NewsPage       = lazy(() => import('./pages/NewsPage'))
+const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage'))
 const ContactPage    = lazy(() => import('./pages/ContactPage'))
 const GalleryPage    = lazy(() => import('./pages/GalleryPage'))
 
@@ -62,7 +62,7 @@ export default function App() {
                   <Route path="/programs/:slug"     element={<ProgramDetailPage />} />
                   <Route path="/impact"       element={<ImpactPage />} />
                   <Route path="/get-involved" element={<GetInvolvedPage />} />
-                  <Route path="/news"         element={<NewsPage />} />
+                  <Route path="/testimonials" element={<TestimonialsPage />} />
                   <Route path="/contact"      element={<ContactPage />} />
                   <Route path="/gallery/:category" element={<GalleryPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />

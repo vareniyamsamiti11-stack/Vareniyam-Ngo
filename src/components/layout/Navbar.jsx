@@ -209,7 +209,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className={styles.logo} aria-label="VSKS Home">
             <div className={styles.logoMark}>
-              <span className={styles.logoV}>V</span>
+              <img src="/Assets/logo.jpeg" alt="VSKS Logo" className={styles.logoImg} />
             </div>
             <div className={styles.logoText}>
               <span className={styles.logoName}>{ORG.shortName}</span>
@@ -314,7 +314,7 @@ export default function Navbar() {
               </button>
 
               <div className={styles.mobileLogo}>
-                <span className={styles.logoV}>V</span>
+                <img src="/Assets/logo.jpeg" alt="VSKS Logo" className={styles.mobileLogoImg} />
                 <span className={styles.logoName}>{ORG.shortName}</span>
               </div>
 

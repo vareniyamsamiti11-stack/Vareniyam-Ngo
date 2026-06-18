@@ -20,7 +20,7 @@
 }
 
 /* Brand col */
-.brand {}
+.brand { display: block; }
 
 .logo {
   display: flex;
@@ -32,19 +32,16 @@
 .logoMark {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark));
   border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.logoMark span {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: var(--fw-bold);
-  color: var(--color-white);
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .logoName {
@@ -90,7 +87,7 @@
 }
 
 /* Columns */
-.col {}
+.col { display: block; }
 
 .colTitle {
   font-family: var(--font-body);

@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS donations (
   payment_mode TEXT DEFAULT 'UPI QR',   -- e.g. 'UPI QR', 'Bank Transfer'
   status       TEXT DEFAULT 'pending',  -- 'pending' | 'received'
   receipt_sent BOOLEAN DEFAULT FALSE,
+  screenshot_url TEXT,
   created_at   TIMESTAMPTZ DEFAULT NOW()
 );
 
