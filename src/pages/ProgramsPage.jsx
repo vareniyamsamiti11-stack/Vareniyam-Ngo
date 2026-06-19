@@ -5,7 +5,7 @@ import { PROGRAMS } from '../lib/constants'
 import styles from './ProgramsPage.module.css'
 
 const EMOJI_MAP = {
-  'pehchan': '🎓', 'navaankur': '🏘️', 'mental-health': '🧠',
+  'mental-health': '🧠',
   'suicide-prevention': '💚', 'substance-abuse': '🚫',
   'vocational-training': '✂️', 'swachh-bharat': '🌿',
   'environment': '🌳', 'financial-awareness': '💰',
@@ -57,7 +57,12 @@ export default function ProgramsPage() {
               >
                 <div className={styles.cardTop}>
                   <div className={styles.iconWrap}>
-                    <span className={styles.emoji}>{EMOJI_MAP[program.slug]}</span>
+                    {program.slug === 'pehchan'
+                      ? <img src="/Assets/phenchan logo.jpeg" alt="Pehchan Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '6px' }} />
+                      : program.slug === 'navaankur'
+                      ? <img src="/naavankur logo.jpeg" alt="Navaankur Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '6px' }} />
+                      : <span className={styles.emoji}>{EMOJI_MAP[program.slug]}</span>
+                    }
                   </div>
                   <div className={styles.cardMeta}>
                     <h2 className={styles.cardTitle}>{program.title}</h2>

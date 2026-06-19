@@ -93,7 +93,7 @@ export default function HomePage() {
           >
             <div className={styles.heroImageFrame}>
               <img
-                src="/hero.jpeg"
+                src="/Assets/heropage.jpeg"
                 alt="VSKS volunteers working with the community"
                 className={styles.heroImage}
                 loading="eager"
@@ -160,7 +160,12 @@ export default function HomePage() {
             {PROGRAMS.slice(0, 6).map(program => (
               <motion.div key={program.slug} className={styles.programCard} variants={fadeUp}>
                 <div className={styles.programIconWrap} style={{ '--prog-color': program.color }}>
-                  <span className={styles.programEmoji}>{getProgramEmoji(program.slug)}</span>
+                  {program.slug === 'pehchan'
+                    ? <img src="/Assets/phenchan logo.jpeg" alt="Pehchan Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '8px' }} />
+                    : program.slug === 'navaankur'
+                    ? <img src="/naavankur logo.jpeg" alt="Navaankur Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '8px' }} />
+                    : <span className={styles.programEmoji}>{getProgramEmoji(program.slug)}</span>
+                  }
                 </div>
                 <h3 className={styles.programTitle}>{program.title}</h3>
                 <p className={styles.programDesc}>{program.shortDesc}</p>
@@ -295,8 +300,6 @@ export default function HomePage() {
 
 function getProgramEmoji(slug) {
   const map = {
-    'pehchan': '🎓',
-    'navaankur': '🏘️',
     'mental-health': '🧠',
     'suicide-prevention': '💚',
     'substance-abuse': '🚫',

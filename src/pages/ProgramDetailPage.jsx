@@ -6,7 +6,7 @@ import { PROGRAMS, PROGRAM_CATEGORIES } from '../lib/constants'
 import styles from './ProgramDetailPage.module.css'
 
 const EMOJI_MAP = {
-  'pehchan': '🎓', 'navaankur': '🏘️', 'mental-health': '🧠',
+  'mental-health': '🧠',
   'suicide-prevention': '💚', 'substance-abuse': '🚫',
   'vocational-training': '✂️', 'swachh-bharat': '🌿',
   'environment': '🌳', 'financial-awareness': '💰',
@@ -89,7 +89,12 @@ export default function ProgramDetailPage() {
             )}
 
             <motion.div className={styles.heroEmoji} variants={fadeUp}>
-              {emoji}
+              {slug === 'pehchan'
+                ? <img src="/Assets/phenchan logo.jpeg" alt="Pehchan Logo" style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '10px' }} />
+                : slug === 'navaankur'
+                ? <img src="/naavankur logo.jpeg" alt="Navaankur Logo" style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '10px' }} />
+                : emoji
+              }
             </motion.div>
 
             <motion.h1 variants={fadeUp}>{program.title}</motion.h1>
@@ -204,7 +209,12 @@ export default function ProgramDetailPage() {
                     style={{ '--rel-color': rel.color }}
                     id={`related-${rel.slug}`}
                   >
-                    <span className={styles.relatedEmoji}>{EMOJI_MAP[rel.slug]}</span>
+                    {rel.slug === 'pehchan'
+                      ? <img src="/Assets/phenchan logo.jpeg" alt="Pehchan Logo" style={{ width: '2rem', height: '2rem', objectFit: 'contain', borderRadius: '4px', flexShrink: 0 }} />
+                      : rel.slug === 'navaankur'
+                      ? <img src="/naavankur logo.jpeg" alt="Navaankur Logo" style={{ width: '2rem', height: '2rem', objectFit: 'contain', borderRadius: '4px', flexShrink: 0 }} />
+                      : <span className={styles.relatedEmoji}>{EMOJI_MAP[rel.slug]}</span>
+                    }
                     <div>
                       <h3>{rel.title}</h3>
                       <p>{rel.subtitle}</p>
