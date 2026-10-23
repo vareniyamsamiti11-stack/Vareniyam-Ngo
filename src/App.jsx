@@ -12,6 +12,8 @@ const HomePage       = lazy(() => import('./pages/HomePage'))
 const AboutPage      = lazy(() => import('./pages/AboutPage'))
 const ProgramsPage   = lazy(() => import('./pages/ProgramsPage'))
 const ProgramDetailPage = lazy(() => import('./pages/ProgramDetailPage'))
+const EventsPage     = lazy(() => import('./pages/EventsPage'))
+const EventDetailPage = lazy(() => import('./pages/EventDetailPage'))
 const ImpactPage     = lazy(() => import('./pages/ImpactPage'))
 const GetInvolvedPage = lazy(() => import('./pages/GetInvolvedPage'))
 const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage'))
@@ -19,9 +21,13 @@ const ContactPage    = lazy(() => import('./pages/ContactPage'))
 const GalleryPage    = lazy(() => import('./pages/GalleryPage'))
 
 // Lazy-loaded admin pages
-const AdminLogin      = lazy(() => import('./pages/admin/AdminLogin'))
-const AdminDashboard  = lazy(() => import('./pages/admin/AdminDashboard'))
-const AdminNews       = lazy(() => import('./pages/admin/AdminNews'))
+const AdminLogin       = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard   = lazy(() => import('./pages/admin/AdminDashboard'))
+const AdminEvents      = lazy(() => import('./pages/admin/AdminEvents'))
+const AdminPrograms    = lazy(() => import('./pages/admin/AdminPrograms'))
+const AdminGallery     = lazy(() => import('./pages/admin/AdminGallery'))
+const AdminContent     = lazy(() => import('./pages/admin/AdminContent'))
+const AdminNews        = lazy(() => import('./pages/admin/AdminNews'))
 const AdminSubmissions = lazy(() => import('./pages/admin/AdminSubmissions'))
 
 export default function App() {
@@ -29,13 +35,33 @@ export default function App() {
     <div className={styles.app}>
       <ScrollToTop />
       <Routes>
-        {/* Admin routes (no Navbar/Footer) */}
+        {/* Admin routes (no Navbar/Footer, protected by session) */}
         <Route path="/admin/login" element={
           <Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>
         } />
         <Route path="/admin" element={
           <ProtectedRoute>
             <Suspense fallback={<PageLoader />}><AdminDashboard /></Suspense>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/events" element={
+          <ProtectedRoute>
+            <Suspense fallback={<PageLoader />}><AdminEvents /></Suspense>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/programs" element={
+          <ProtectedRoute>
+            <Suspense fallback={<PageLoader />}><AdminPrograms /></Suspense>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/gallery" element={
+          <ProtectedRoute>
+            <Suspense fallback={<PageLoader />}><AdminGallery /></Suspense>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/content" element={
+          <ProtectedRoute>
+            <Suspense fallback={<PageLoader />}><AdminContent /></Suspense>
           </ProtectedRoute>
         } />
         <Route path="/admin/news" element={
@@ -56,16 +82,18 @@ export default function App() {
             <main className={styles.main}>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
-                  <Route path="/"             element={<HomePage />} />
-                  <Route path="/about"        element={<AboutPage />} />
+                  <Route path="/"                  element={<HomePage />} />
+                  <Route path="/about"             element={<AboutPage />} />
                   <Route path="/programs"          element={<ProgramsPage />} />
-                  <Route path="/programs/:slug"     element={<ProgramDetailPage />} />
-                  <Route path="/impact"       element={<ImpactPage />} />
-                  <Route path="/get-involved" element={<GetInvolvedPage />} />
-                  <Route path="/testimonials" element={<TestimonialsPage />} />
-                  <Route path="/contact"      element={<ContactPage />} />
+                  <Route path="/programs/:slug"    element={<ProgramDetailPage />} />
+                  <Route path="/events"            element={<EventsPage />} />
+                  <Route path="/events/:slug"      element={<EventDetailPage />} />
+                  <Route path="/impact"            element={<ImpactPage />} />
+                  <Route path="/get-involved"      element={<GetInvolvedPage />} />
+                  <Route path="/testimonials"      element={<TestimonialsPage />} />
+                  <Route path="/contact"           element={<ContactPage />} />
                   <Route path="/gallery/:category" element={<GalleryPage />} />
-                  <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/gallery"           element={<GalleryPage />} />
                 </Routes>
               </Suspense>
             </main>

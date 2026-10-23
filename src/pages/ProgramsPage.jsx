@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
-import { PROGRAMS } from '../lib/constants'
+import { usePrograms } from '../hooks/useSiteContent'
 import styles from './ProgramsPage.module.css'
 
 const EMOJI_MAP = {
@@ -19,6 +19,7 @@ const stagger = { visible: { transition: { staggerChildren: 0.08 } } }
 
 export default function ProgramsPage() {
   const [active, setActive] = useState(null)
+  const { programs, loading } = usePrograms()
 
   return (
     <>
@@ -71,7 +72,7 @@ export default function ProgramsPage() {
                   <span className={styles.chevron}>{active === program.slug ? '−' : '+'}</span>
                 </div>
 
-                <p className={styles.shortDesc}>{program.shortDesc}</p>
+                <p className={styles.shortDesc}>{program.short_desc || program.shortDesc}</p>
 
                 <AnimatePresence>
                   {active === program.slug && (
@@ -82,15 +83,17 @@ export default function ProgramsPage() {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.35, ease: [0.22,1,0.36,1] }}
                     >
-                      <p className={styles.fullDesc}>{program.fullDesc}</p>
-                      <div className={styles.impactRow}>
-                        {program.impactStats.map(stat => (
-                          <div key={stat.label} className={styles.impactStat}>
-                            <span className={styles.impactVal}>{stat.value}</span>
-                            <span className={styles.impactLbl}>{stat.label}</span>
-                          </div>
-                        ))}
-                      </div>
+                      <p className={styles.fullDesc}>{program.full_desc || program.fullDesc}</p>
+                      {(program.impactStats || program.impact_stats) && (
+                        <div className={styles.impactRow}>
+                          {(program.impactStats || program.impact_stats).map(stat => (
+                            <div key={stat.label} className={styles.impactStat}>
+                              <span className={styles.impactVal}>{stat.value}</span>
+                              <span className={styles.impactLbl}>{stat.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

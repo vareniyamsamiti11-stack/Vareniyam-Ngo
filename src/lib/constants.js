@@ -10,6 +10,7 @@ export const NAV_LINKS = [
   { label: 'About',       href: '/about' },
   { label: 'Programs',    href: '/programs', hasDropdown: true, dropdownType: 'programs' },
   { label: 'Gallery',     href: '/gallery',  hasDropdown: true, dropdownType: 'gallery' },
+  { label: 'Events',      href: '/events' },
   { label: 'Impact',      href: '/impact' },
   { label: 'Get Involved',href: '/get-involved' },
   { label: 'Testimonials', href: '/testimonials' },

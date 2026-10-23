@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useState } from 'react'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
 import { ORG } from '../lib/constants'
+import { useSiteContent } from '../hooks/useSiteContent'
 import { supabase } from '../lib/supabase'
 import styles from './ContactPage.module.css'
 
@@ -23,38 +24,40 @@ const schema = z.object({
   message: z.string().min(10, 'Please write at least 10 characters'),
 })
 
-const CONTACT_INFO = [
-  {
-    icon: MapPin,
-    label: 'Address',
-    value: ORG.address,
-    color: 'var(--color-saffron)',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: ORG.phone,
-    href: `tel:${ORG.phone}`,
-    color: 'var(--color-teal)',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    value: ORG.email,
-    href: `mailto:${ORG.email}`,
-    color: 'var(--color-earth)',
-  },
-  {
-    icon: Clock,
-    label: 'Office Hours',
-    value: 'Monday – Saturday: 10:00 AM – 6:00 PM',
-    color: 'var(--color-saffron)',
-  },
-]
-
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
+  const siteContent = useSiteContent()
+  const contact = siteContent.contact || {}
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
+
+  const CONTACT_INFO = [
+    {
+      icon: MapPin,
+      label: 'Address',
+      value: contact.address || ORG.address,
+      color: 'var(--color-saffron)',
+    },
+    {
+      icon: Phone,
+      label: 'Phone',
+      value: contact.phone || ORG.phone,
+      href: `tel:${contact.phone || ORG.phone}`,
+      color: 'var(--color-teal)',
+    },
+    {
+      icon: Mail,
+      label: 'Email',
+      value: contact.email || ORG.email,
+      href: `mailto:${contact.email || ORG.email}`,
+      color: 'var(--color-earth)',
+    },
+    {
+      icon: Clock,
+      label: 'Office Hours',
+      value: 'Monday – Saturday: 10:00 AM – 6:00 PM',
+      color: 'var(--color-saffron)',
+    },
+  ]
 
   const onSubmit = async (data) => {
     setSubmitted(false)

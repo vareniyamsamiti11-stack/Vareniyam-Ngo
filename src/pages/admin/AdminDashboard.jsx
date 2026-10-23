@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
-import { LayoutDashboard, Newspaper, Inbox, LogOut, Users, Heart, MessageSquare, Briefcase } from 'lucide-react'
+import {
+  LayoutDashboard, Newspaper, Inbox, LogOut, Users, Heart,
+  MessageSquare, Briefcase, Calendar, BookOpen, Image, FileEdit
+} from 'lucide-react'
 import styles from './AdminLayout.module.css'
 
 export function AdminShell({ children, active }) {
   const navigate = useNavigate()
   const NAV = [
     { label: 'Dashboard',   href: '/admin',             icon: LayoutDashboard },
-    { label: 'News CMS',    href: '/admin/news',         icon: Newspaper },
+    { label: 'Events',      href: '/admin/events',      icon: Calendar },
+    { label: 'Programs',    href: '/admin/programs',    icon: BookOpen },
+    { label: 'Photo Gallery',href: '/admin/gallery',    icon: Image },
+    { label: 'Site Content',href: '/admin/content',     icon: FileEdit },
     { label: 'Submissions', href: '/admin/submissions',  icon: Inbox },
+    { label: 'News CMS',    href: '/admin/news',         icon: Newspaper },
   ]
   async function handleLogout() {
     await supabase.auth.signOut()
@@ -25,12 +32,12 @@ export function AdminShell({ children, active }) {
         <nav className={styles.sidebarNav}>
           {NAV.map(({ label, href, icon: Icon }) => (
             <Link key={href} to={href} className={`${styles.navItem} ${active === href ? styles.navActive : ''}`}>
-              <Icon size={18} /> {label}
+              <Icon size={18} /> <span>{label}</span>
             </Link>
           ))}
         </nav>
         <button className={styles.logoutBtn} onClick={handleLogout}>
-          <LogOut size={16} /> Sign Out
+          <LogOut size={16} /> <span>Sign Out</span>
         </button>
       </aside>
       <main className={styles.content}>{children}</main>
@@ -39,29 +46,45 @@ export function AdminShell({ children, active }) {
 }
 
 export default function AdminDashboard() {
-  const [counts, setCounts] = useState({ contacts: 0, volunteers: 0, csr: 0, donations: 0 })
+  const [counts, setCounts] = useState({ contacts: 0, volunteers: 0, csr: 0, donations: 0, events: 0, programs: 0 })
   const [recentContacts, setRecentContacts] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function load() {
-      const [c, v, csr, d, rc] = await Promise.all([
-        supabase.from('contact_messages').select('id', { count: 'exact', head: true }),
-        supabase.from('volunteer_applications').select('id', { count: 'exact', head: true }),
-        supabase.from('csr_inquiries').select('id', { count: 'exact', head: true }),
-        supabase.from('donations').select('id', { count: 'exact', head: true }).eq('status', 'received'),
-        supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(5),
-      ])
-      setCounts({ contacts: c.count || 0, volunteers: v.count || 0, csr: csr.count || 0, donations: d.count || 0 })
-      setRecentContacts(rc.data || [])
-      setLoading(false)
+      try {
+        const [c, v, csr, d, ev, pr, rc] = await Promise.all([
+          supabase.from('contact_messages').select('id', { count: 'exact', head: true }),
+          supabase.from('volunteer_applications').select('id', { count: 'exact', head: true }),
+          supabase.from('csr_inquiries').select('id', { count: 'exact', head: true }),
+          supabase.from('donations').select('id', { count: 'exact', head: true }).eq('status', 'received'),
+          supabase.from('events').select('id', { count: 'exact', head: true }),
+          supabase.from('programs').select('id', { count: 'exact', head: true }),
+          supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(5),
+        ])
+        setCounts({
+          contacts: c.count || 0,
+          volunteers: v.count || 0,
+          csr: csr.count || 0,
+          donations: d.count || 0,
+          events: ev.count || 0,
+          programs: pr.count || 0,
+        })
+        setRecentContacts(rc.data || [])
+      } catch (err) {
+        console.error('Error loading dashboard stats:', err)
+      } finally {
+        setLoading(false)
+      }
     }
     load()
   }, [])
 
   const STATS = [
-    { label: 'Contact Messages', value: counts.contacts,  icon: MessageSquare, color: 'var(--color-teal)' },
-    { label: 'Volunteer Applications', value: counts.volunteers, icon: Users, color: 'var(--color-saffron)' },
+    { label: 'Published Events', value: counts.events, icon: Calendar, color: 'var(--color-saffron)' },
+    { label: 'Active Programs',  value: counts.programs, icon: BookOpen, color: 'var(--color-teal)' },
+    { label: 'Contact Messages', value: counts.contacts,  icon: MessageSquare, color: 'var(--color-earth)' },
+    { label: 'Volunteer Apps',   value: counts.volunteers, icon: Users, color: 'var(--color-saffron)' },
     { label: 'CSR Inquiries',    value: counts.csr,       icon: Briefcase,     color: 'var(--color-earth)' },
     { label: 'Successful Donations', value: counts.donations, icon: Heart,    color: 'var(--color-success)' },
   ]

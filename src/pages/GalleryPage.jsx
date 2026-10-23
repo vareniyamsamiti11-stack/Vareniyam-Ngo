@@ -1,13 +1,15 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react'
 import { GALLERY_CATEGORIES } from '../lib/constants'
+import { supabase } from '../lib/supabase'
 import styles from './GalleryPage.module.css'
 
 // Build a safe URL for photos with spaces/special chars
 function photoUrl(folder, filename) {
+  if (filename.startsWith('http') || filename.startsWith('/')) return filename
   return `/Assets/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`
 }
 
@@ -18,23 +20,44 @@ const fadeUp = {
 const stagger = { visible: { transition: { staggerChildren: 0.05 } } }
 
 export default function GalleryPage() {
-  const { category } = useParams()
+  const { category: rawCategory } = useParams()
+  const category = rawCategory || 'navankar-project'
   const navigate = useNavigate()
   const [lightboxIndex, setLightboxIndex] = useState(null)
+  const [dbPhotos, setDbPhotos] = useState([])
 
-  const cat = GALLERY_CATEGORIES.find(c => c.id === category)
+  const cat = GALLERY_CATEGORIES.find(c => c.id === category) || GALLERY_CATEGORIES[0]
+
+  useEffect(() => {
+    async function fetchDbPhotos() {
+      try {
+        const { data } = await supabase
+          .from('gallery_items')
+          .select('*')
+          .eq('category', category)
+          .order('created_at', { ascending: false })
+        if (data) setDbPhotos(data.map(d => d.image_url))
+      } catch (err) {
+        console.warn('Error fetching db photos:', err)
+      }
+    }
+    fetchDbPhotos()
+  }, [category])
+
+  // Combine static photos and uploaded db photos
+  const allPhotos = [...(cat ? cat.photos : []), ...dbPhotos]
 
   // Lightbox navigation
   const openLightbox = useCallback((idx) => setLightboxIndex(idx), [])
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
   const prevPhoto = useCallback(() => {
-    if (!cat) return
-    setLightboxIndex(i => (i - 1 + cat.photos.length) % cat.photos.length)
-  }, [cat])
+    if (allPhotos.length === 0) return
+    setLightboxIndex(i => (i - 1 + allPhotos.length) % allPhotos.length)
+  }, [allPhotos.length])
   const nextPhoto = useCallback(() => {
-    if (!cat) return
-    setLightboxIndex(i => (i + 1) % cat.photos.length)
-  }, [cat])
+    if (allPhotos.length === 0) return
+    setLightboxIndex(i => (i + 1) % allPhotos.length)
+  }, [allPhotos.length])
 
   // Keyboard navigation for lightbox
   const handleKeyDown = useCallback((e) => {
@@ -44,17 +67,7 @@ export default function GalleryPage() {
     if (e.key === 'ArrowRight') nextPhoto()
   }, [lightboxIndex, closeLightbox, prevPhoto, nextPhoto])
 
-  if (!cat) {
-    return (
-      <div className={styles.notFound}>
-        <Images size={48} style={{ color: 'var(--color-mid-gray)' }} />
-        <h2>Gallery category not found</h2>
-        <Link to="/gallery/navankar-project" className={styles.backLink}>← Back to Gallery</Link>
-      </div>
-    )
-  }
-
-  const hasPhotos = cat.photos.length > 0
+  const hasPhotos = allPhotos.length > 0
 
   return (
     <>
@@ -130,9 +143,9 @@ export default function GalleryPage() {
               initial="hidden"
               animate="visible"
             >
-              {cat.photos.map((photo, idx) => (
+              {allPhotos.map((photo, idx) => (
                 <motion.div
-                  key={photo}
+                  key={photo + idx}
                   className={styles.photoCard}
                   variants={fadeUp}
                   onClick={() => openLightbox(idx)}
@@ -195,7 +208,7 @@ export default function GalleryPage() {
 
             {/* Counter */}
             <div className={styles.lightboxCounter}>
-              {lightboxIndex + 1} / {cat.photos.length}
+              {lightboxIndex + 1} / {allPhotos.length}
             </div>
 
             {/* Prev */}
@@ -218,7 +231,7 @@ export default function GalleryPage() {
               transition={{ duration: 0.22 }}
             >
               <img
-                src={photoUrl(cat.folder, cat.photos[lightboxIndex])}
+                src={photoUrl(cat.folder, allPhotos[lightboxIndex])}
                 alt={`${cat.label} photo ${lightboxIndex + 1}`}
                 className={styles.lightboxImage}
               />

@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Quote, Heart } from 'lucide-react'
-import { TESTIMONIALS_FULL, ORG } from '../lib/constants'
+import { ORG } from '../lib/constants'
+import { useTestimonials } from '../hooks/useSiteContent'
 import { Link } from 'react-router-dom'
 import styles from './TestimonialsPage.module.css'
 
@@ -22,12 +23,13 @@ const CATEGORY_LABELS = {
 
 export default function TestimonialsPage() {
   const [activeCategory, setActiveCategory] = useState('all')
+  const { testimonials } = useTestimonials()
 
   const filtered = activeCategory === 'all'
-    ? TESTIMONIALS_FULL
-    : TESTIMONIALS_FULL.filter(t => t.category === activeCategory)
+    ? testimonials
+    : testimonials.filter(t => t.category === activeCategory)
 
-  const featured = TESTIMONIALS_FULL[0]
+  const featured = testimonials[0]
 
   return (
     <>

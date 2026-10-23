@@ -2,7 +2,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Users, Target, Heart } from 'lucide-react'
-import { PROGRAMS, PROGRAM_CATEGORIES } from '../lib/constants'
+import { PROGRAM_CATEGORIES } from '../lib/constants'
+import { usePrograms } from '../hooks/useSiteContent'
 import styles from './ProgramDetailPage.module.css'
 
 const EMOJI_MAP = {
@@ -26,8 +27,17 @@ const stagger = { visible: { transition: { staggerChildren: 0.09 } } }
 export default function ProgramDetailPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
+  const { programs, loading } = usePrograms()
 
-  const program = PROGRAMS.find(p => p.slug === slug)
+  const program = programs.find(p => p.slug === slug)
+
+  if (loading) {
+    return (
+      <div className="section container text-center" style={{ padding: '5rem 0', color: 'var(--color-mid-gray)' }}>
+        Loading program...
+      </div>
+    )
+  }
 
   if (!program) {
     return (
@@ -47,7 +57,7 @@ export default function ProgramDetailPage() {
   const related = category
     ? category.programs
         .filter(s => s !== slug)
-        .map(s => PROGRAMS.find(p => p.slug === s))
+        .map(s => programs.find(p => p.slug === s))
         .filter(Boolean)
     : []
 
@@ -55,7 +65,7 @@ export default function ProgramDetailPage() {
     <>
       <Helmet>
         <title>{program.title} – VSKS | Vareniyam Samaj Kalyan Samiti</title>
-        <meta name="description" content={program.shortDesc} />
+        <meta name="description" content={program.short_desc || program.shortDesc} />
       </Helmet>
 
       {/* Hero */}

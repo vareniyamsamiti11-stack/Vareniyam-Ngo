@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { ArrowRight, Heart, Users, GraduationCap, Leaf, ChevronDown, Mail } from 'lucide-react'
-import { IMPACT_STATS, PROGRAMS, TESTIMONIALS, PARTNERS, ORG } from '../lib/constants'
+import { ArrowRight, Heart, Users, GraduationCap, Leaf, ChevronDown, Mail, Calendar } from 'lucide-react'
+import { PARTNERS, ORG } from '../lib/constants'
+import { useSiteContent, usePrograms, useTestimonials, useEvents } from '../hooks/useSiteContent'
 import { supabase } from '../lib/supabase'
 import CountUp from '../components/ui/CountUp'
 import styles from './HomePage.module.css'
@@ -14,11 +15,16 @@ const fadeUp = {
 }
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 
-const ICON_MAP = { GraduationCap, Users, Heart, Leaf }
-
 export default function HomePage() {
   const [nlEmail, setNlEmail]   = useState('')
-  const [nlStatus, setNlStatus] = useState(null) // null | 'success' | 'error'
+  const [nlStatus, setNlStatus] = useState(null)
+  const siteContent = useSiteContent()
+  const { programs } = usePrograms()
+  const { testimonials } = useTestimonials()
+  const { events } = useEvents()
+
+  const hero = siteContent.hero
+  const impactStats = siteContent.impactStats
 
   async function handleNewsletter(e) {
     e.preventDefault()
@@ -33,7 +39,7 @@ export default function HomePage() {
     <>
       <Helmet>
         <title>VSKS – Vareniyam Samaj Kalyan Samiti | Indore NGO</title>
-        <meta name="description" content="VSKS is an Indore-based NGO working in special education, mental health, environmental action, and community development since 2019." />
+        <meta name="description" content="VSKS is an Indore-based NGO working in special education, mental health, environmental action, and community development since 2018." />
       </Helmet>
 
       {/* ── Hero ── */}
@@ -49,7 +55,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Registered NGO · Since {ORG.founded}
+              {hero.tagline || `Registered NGO · Since ${ORG.founded}`}
             </motion.div>
             <motion.h1
               className={styles.heroTitle}
@@ -57,9 +63,13 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
             >
-              Building Inclusive<br />
-              <span className={styles.heroAccent}>Communities</span>,<br />
-              One Life at a Time
+              {hero.title || (
+                <>
+                  Building Inclusive<br />
+                  <span className={styles.heroAccent}>{hero.accentWord || 'Communities'}</span>,<br />
+                  One Life at a Time
+                </>
+              )}
             </motion.h1>
             <motion.p
               className={styles.heroSubtitle}
@@ -67,7 +77,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
             >
-              {ORG.mission}
+              {hero.subtitle || ORG.mission}
             </motion.p>
             <motion.div
               className={styles.heroCtas}
@@ -75,11 +85,11 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <Link to="/get-involved" className={styles.btnPrimary} id="hero-donate-btn">
-                <Heart size={18} /> Donate Now
+              <Link to={hero.primaryCtaLink || '/get-involved'} className={styles.btnPrimary} id="hero-donate-btn">
+                <Heart size={18} /> {hero.primaryCtaText || 'Donate Now'}
               </Link>
-              <Link to="/programs" className={styles.btnSecondary}>
-                Our Programs <ArrowRight size={16} />
+              <Link to={hero.secondaryCtaLink || '/programs'} className={styles.btnSecondary}>
+                {hero.secondaryCtaText || 'Our Programs'} <ArrowRight size={16} />
               </Link>
             </motion.div>
           </div>
@@ -93,7 +103,7 @@ export default function HomePage() {
           >
             <div className={styles.heroImageFrame}>
               <img
-                src="/Assets/heropage.jpeg"
+                src={hero.coverImage || '/Assets/heropage.jpeg'}
                 alt="VSKS volunteers working with the community"
                 className={styles.heroImage}
                 loading="eager"
@@ -122,7 +132,7 @@ export default function HomePage() {
       <section id="impact" className={`${styles.statsSection} section--sm`}>
         <div className="container">
           <div className={styles.statsGrid}>
-            {IMPACT_STATS.map((stat, i) => (
+            {(impactStats || []).map((stat, i) => (
               <motion.div
                 key={stat.label}
                 className={styles.statCard}
@@ -157,9 +167,9 @@ export default function HomePage() {
             className={styles.programGrid}
             variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}
           >
-            {PROGRAMS.slice(0, 6).map(program => (
+            {(programs || []).slice(0, 6).map(program => (
               <motion.div key={program.slug} className={styles.programCard} variants={fadeUp}>
-                <div className={styles.programIconWrap} style={{ '--prog-color': program.color }}>
+                <div className={styles.programIconWrap} style={{ '--prog-color': program.color || 'var(--color-teal)' }}>
                   {program.slug === 'pehchan'
                     ? <img src="/Assets/phenchan logo.jpeg" alt="Pehchan Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '8px' }} />
                     : program.slug === 'navaankur'
@@ -168,7 +178,7 @@ export default function HomePage() {
                   }
                 </div>
                 <h3 className={styles.programTitle}>{program.title}</h3>
-                <p className={styles.programDesc}>{program.shortDesc}</p>
+                <p className={styles.programDesc}>{program.short_desc || program.shortDesc}</p>
                 <Link to={`/programs`} className={styles.programLink}>
                   Learn more <ArrowRight size={14} />
                 </Link>
@@ -184,6 +194,56 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Events Teaser (If published events exist) ── */}
+      {events && events.length > 0 && (
+        <section className="section" style={{ background: 'var(--color-cream)', borderTop: '1px solid var(--color-warm-gray)' }}>
+          <div className="container">
+            <motion.div
+              className={`${styles.sectionHeader} text-center`}
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            >
+              <span className={styles.eyebrow}>Community Action</span>
+              <h2>Upcoming &amp; Recent Events</h2>
+              <p>Join us at our workshops, awareness drives, and grassroots community campaigns.</p>
+            </motion.div>
+
+            <motion.div
+              className={styles.programGrid}
+              variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            >
+              {events.slice(0, 3).map(event => (
+                <motion.div key={event.id} className={styles.programCard} variants={fadeUp} style={{ padding: 0, overflow: 'hidden' }}>
+                  <img
+                    src={event.cover_image || '/Assets/heropage.jpeg'}
+                    alt={event.title}
+                    style={{ width: '100%', height: '160px', objectFit: 'cover' }}
+                  />
+                  <div style={{ padding: '1.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: 'var(--text-xs)', color: 'var(--color-saffron)', marginBottom: '0.4rem', fontWeight: 'var(--fw-semi)' }}>
+                      <Calendar size={13} />
+                      <span>{new Date(event.event_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    </div>
+                    <h3 className={styles.programTitle} style={{ fontSize: 'var(--text-lg)', margin: '0 0 0.5rem' }}>{event.title}</h3>
+                    <p className={styles.programDesc} style={{ margin: '0 0 1rem' }}>
+                      {event.short_desc || (event.full_desc || '').slice(0, 90) + '...'}
+                    </p>
+                    <Link to={`/events/${event.slug}`} className={styles.programLink}>
+                      Event Details &amp; Photos <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <div className="text-center" style={{ marginTop: '2.5rem' }}>
+              <Link to="/events" className={styles.btnOutline}>
+                View All Events <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Mission Quote ── */}
       <section className={styles.missionSection}>
         <div className="container">
@@ -195,7 +255,7 @@ export default function HomePage() {
             Every individual deserves to live with dignity — regardless of disability, poverty, or circumstance.
             <span className={styles.quoteMarks}>"</span>
             <footer className={styles.quoteAuthor}>
-              — {ORG.founder}, {ORG.founderTitle}
+              — {siteContent.about?.founderName || ORG.founder}, {siteContent.about?.founderTitle || ORG.founderTitle}
             </footer>
           </motion.blockquote>
         </div>
@@ -215,11 +275,11 @@ export default function HomePage() {
             className={styles.testimonialGrid}
             variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}
           >
-            {TESTIMONIALS.map(t => (
-              <motion.div key={t.id} className={styles.testimonialCard} variants={fadeUp}>
+            {(testimonials || []).slice(0, 3).map((t, idx) => (
+              <motion.div key={t.id || idx} className={styles.testimonialCard} variants={fadeUp}>
                 <p className={styles.quote}>"{t.quote}"</p>
                 <div className={styles.testimonialAuthor}>
-                  <div className={styles.avatar}>{t.name.charAt(0)}</div>
+                  <div className={styles.avatar}>{(t.name || 'V').charAt(0)}</div>
                   <div>
                     <strong>{t.name}</strong>
                     <span>{t.role}</span>
